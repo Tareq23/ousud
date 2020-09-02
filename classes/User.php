@@ -47,7 +47,7 @@ class User{
             $data = $this->_db->get('admin',array($field=>$user))->fetch();
             if($data->count())
             {
-                $this->_data = $data;
+                $this->_data = $data->result();
                 $this->_isAdmin = true;
                 // 'admin true!';
                 return true;
