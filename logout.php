@@ -10,5 +10,8 @@ if(Session::exists('admin')===true)
 {
     Session::delete('admin');
 }
+else{
+    session_destroy();
+}
 
 Redirect::to('index.php');

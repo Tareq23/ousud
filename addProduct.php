@@ -10,7 +10,6 @@ $categorys = DB::connect()->getAll('category')->fetchAll()->result();
 
 if(Input::exists())
 {
-
     if(Token::check(Input::check('token')))
     {
         $validate = new Validate('product');

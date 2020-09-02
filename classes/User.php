@@ -61,15 +61,15 @@ class User{
 
         if($user)
         {
-            if($this->data()->result()->password === Hash::make($password))
+            if($this->data()->password === Hash::make($password))
             {
                 if($this->_isAdmin)
                 {
                     Session::put('admin',true);
-                    Session::put($this->_sessionName,$this->data()->result()->id);
+                    Session::put($this->_sessionName,$this->data()->id);
                 }
                 else{
-                    Session::put($this->_sessionName,$this->data()->result()->id);
+                    Session::put($this->_sessionName,$this->data()->id);
                 }
                 return true;
             }
