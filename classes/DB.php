@@ -121,9 +121,10 @@ class DB{
                 {
                     $columns .=', ';
                 }
+                $cnt++;
             }
             $keys = array_keys($where);
-            $sql = "UPDATE  {$table} SET {$columns} WHERE  {$keys[0]} = {$where[$keys[0]]}";
+            $sql = "UPDATE  {$table} SET {$columns} WHERE {$keys[0]} = {$where[$keys[0]]}";
             return $this->query($sql,$fields);
         }
     }

@@ -19,7 +19,11 @@ class Validate{
             foreach($rules as $rule=>$value)
             {
 
-                if(($rule=='require')&&(empty(Input::check($item))))
+                if($item==='image'&&$value=='require')
+                {
+                    $this->_error[$item] = "{$item} must be required";
+                }
+                else if(($rule=='require')&&(empty(Input::check($item))))
                 {
                     $this->_error[$item] = "{$item} must be required";
                 }
@@ -60,6 +64,12 @@ class Validate{
                             {
                                 $this->_error[$item] = "This {$item} already exists";
                             }
+                        break;
+                        case 'extension':
+                             if(!Input::extension($value))
+                             {
+                                $this->_error[$image] = "This {$item} must be jpg,png or gif type";
+                             }
                         break;
                     }
                 }

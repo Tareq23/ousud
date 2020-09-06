@@ -16,6 +16,12 @@ class Input{
             return false;
         }
     }
+    public static function extension($value)
+    {
+        $extensions = array("jpg","jpeg","png","gif");
+        $value = strtolower($value);
+        return in_array($value,$extensions)?true:false;
+    }
     public static function check($value)
     {
         if(isset($_POST[$value])) return $_POST[$value];

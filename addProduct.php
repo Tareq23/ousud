@@ -12,12 +12,24 @@ if(Input::exists())
 {
     if(Token::check(Input::check('token')))
     {
+        // $image = $_FILES['image'];
+        $target_file = $_FILES['image']['name'];
+
+        $ext = explode('.',$target_file);
+        $ext = end($ext);
+        $image_name = Input::check('product_name').'.'.$ext;
+        $tmp_name = $_FILES['image']['tmp_name'];
+
         $validate = new Validate('product');
         $validation = $validate->validation(array(
             'product_name' => array(
                 'require' => true,
                 'min' => 3,
                 'unique' => true
+            ),
+            'image'=>array(
+                'require' => true,
+                'extension' => $ext
             ),
             'category' =>array(
                 'require' => true,
@@ -51,10 +63,12 @@ if(Input::exists())
                 'generic' =>Input::check('generic'),
                 'type' => Input::check('type'),
                 'category_id'=>Input::check('category'),
-                'company'=>Input::check('company')
+                'company'=>Input::check('company'),
+                'image' => $image_name
             ));
             if($insert->count())
             {
+                move_uploaded_file($tmp_name,'img/'.$image_name);
                 echo 'Successfully Inserted!';
             }
             else{
@@ -79,7 +93,7 @@ if(Input::exists())
     <h2>Add Product page</h2>
 </div>
 
-<form action=""method="post">
+<form action=""method="post" enctype="multipart/form-data">
     <div class="form">
         <label for="category">Select Category</label>
 

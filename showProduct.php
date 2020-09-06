@@ -13,6 +13,32 @@ $products = DB::connect()->get('product',array('category_id'=>$id))->fetchAll()-
 else{
     $products = DB::connect()->getAll('product')->fetchAll()->result();
 }
+
+
+
+if(Session::exists('product_update_success'))
+{
+  echo Session::get('product_update_success');
+  Session::delete('product_update_success');
+}
+else if(Session::exists('product_update_failed'))
+{
+  $errors = Session::get('product_update_failed');
+  foreach($errors as $error)
+  {
+    echo $error.'<br>';
+  }
+  Session::delete('product_update_failed');
+}
+
+
+if(Session::exists('delete_product'))
+{
+  ?>
+    <p><?php echo $_SESSION['delete_product'];
+    Session::delete('delete_product'); ?></p>  
+  <?php
+}
 ?>
 
 <table class="table table-striped">
@@ -23,6 +49,8 @@ else{
       <th scope="col">company</th>
       <th scope="col">generic</th>
       <th scope="col">type</th>
+      <th scope="col">Picture</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
@@ -33,6 +61,9 @@ else{
         <td><?php echo $product->company; ?></td>
         <td><?php echo $product->generic; ?></td>
         <td><?php echo $product->type; ?></td>
+        <td><img style="width:100px;height:auto;" src="img/<?php echo $product->image;?>" alt="product image"></td>
+        <td><a href="deleteProduct.php?id=<?php echo $product->id;?>">Delete</a></td>
+        <td><a href="updateProduct.php?id=<?php echo $product->id;?>">Update</a></td>
         </tr>
     <?php endforeach;?>
   </tbody>
